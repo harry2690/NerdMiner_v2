@@ -40,11 +40,14 @@ extern monitor_data mMonitor;
 
 #ifdef SD_ID
   SDCard SDCrd = SDCard(SD_ID);
-#else  
+#else
   SDCard SDCrd = SDCard();
 #endif
 
 /**********************⚡ GLOBAL Vars *******************************/
+
+WebServer server(80);
+void handleStatus();
 
 unsigned long start = millis();
 const char* ntpServer = "pool.ntp.org";
@@ -116,6 +119,9 @@ void setup()
   /******** INIT WIFI ************/
   init_WifiManager();
 
+  server.on("/", handleStatus);
+  server.begin();
+
   /******** CREATE TASK TO PRINT SCREEN *****/
   //tft.pushImage(0, 0, MinerWidth, MinerHeight, MinerScreen);
   // Higher prio monitor task
@@ -163,6 +169,17 @@ void app_error_fault_handler(void *arg) {
   esp_restart();
 }
 
+void handleStatus() {
+  mining_data data = getMiningData(millis() - start);
+
+  String json = "{";
+  json += "\"currentHashRate\":\"" + data.currentHashRate + "\",";
+  json += "\"completedShares\":\"" + data.completedShares + "\",";
+  json += "\"bestDiff\":\"" + data.bestDiff + "\"";
+  json += "}";
+  server.send(200, "application/json", json);
+}
+
 void loop() {
   // keep watching the push buttons:
   #ifdef PIN_BUTTON_1
@@ -177,6 +194,7 @@ void loop() {
   touchHandler.isTouched();
 #endif
   wifiManagerProcess(); // avoid delays() in loop when non-blocking and other long running code
+  server.handleClient();
 
   vTaskDelay(50 / portTICK_PERIOD_MS);
 }
