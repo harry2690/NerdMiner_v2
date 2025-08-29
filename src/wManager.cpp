@@ -112,8 +112,10 @@ void init_WifiManager()
         }
     };
     
-    // Free the memory from SDCard class 
+    // Free the memory from SDCard class
     SDCrd.terminate();
+
+    setCurrentLang(Settings.Language);
     
     // Reset settings (only for development)
     //wm.resetSettings();
@@ -138,6 +140,26 @@ void init_WifiManager()
     //wm.setConfigPortalTimeout(120); //seconds
 
     // Custom elements
+
+    char langSel0[10] = "";
+    char langSel1[10] = "";
+    char langSel2[10] = "";
+    switch (Settings.Language) {
+        case 1:
+            strcpy(langSel1, "selected");
+            break;
+        case 2:
+            strcpy(langSel2, "selected");
+            break;
+        default:
+            strcpy(langSel0, "selected");
+            break;
+    }
+    char languageDropdown[200];
+    snprintf(languageDropdown, sizeof(languageDropdown),
+             "<br/><label for='language'>Language</label><select name='language' id='language'><option value='0' %s>English</option><option value='1' %s>繁中</option><option value='2' %s>日本語</option></select>",
+             langSel0, langSel1, langSel2);
+    WiFiManagerParameter language_dropdown(languageDropdown);
 
     // Text box (String) - 80 characters maximum
     WiFiManagerParameter pool_text_box("Poolurl", "Pool url", Settings.PoolAddress.c_str(), 80);
@@ -172,6 +194,7 @@ void init_WifiManager()
   WiFiManagerParameter password_text_box("Poolpassword - Optional", "Pool password", Settings.PoolPassword, 80);
 
   // Add all defined parameters
+  wm.addParameter(&language_dropdown);
   wm.addParameter(&pool_text_box);
   wm.addParameter(&port_text_box_num);
   wm.addParameter(&password_text_box);
@@ -215,6 +238,9 @@ void init_WifiManager()
             Settings.Timezone = atoi(time_text_box_num.getValue());
             //Serial.println(save_stats_to_nvs.getValue());
             Settings.saveStats = (strncmp(save_stats_to_nvs.getValue(), "T", 1) == 0);
+            if (wm.server->hasArg("language")) {
+                Settings.Language = wm.server->arg("language").toInt();
+            }
             #if defined(ESP32_2432S028R) || defined(ESP32_2432S028_2USB)
                 Settings.invertColors = (strncmp(invertColors.getValue(), "T", 1) == 0);
             #endif
@@ -248,6 +274,9 @@ void init_WifiManager()
                 Settings.Timezone = atoi(time_text_box_num.getValue());
                 // Serial.println(save_stats_to_nvs.getValue());
                 Settings.saveStats = (strncmp(save_stats_to_nvs.getValue(), "T", 1) == 0);
+                if (wm.server->hasArg("language")) {
+                    Settings.Language = wm.server->arg("language").toInt();
+                }
                 #if defined(ESP32_2432S028R) || defined(ESP32_2432S028_2USB)
                 Settings.invertColors = (strncmp(invertColors.getValue(), "T", 1) == 0);
                 #endif
@@ -297,6 +326,9 @@ void init_WifiManager()
         Settings.Timezone = atoi(time_text_box_num.getValue());
         Serial.print(LANG_TEXT_TIMEZONE_FROMUTC);
         Serial.println(Settings.Timezone);
+        if (wm.server->hasArg("language")) {
+            Settings.Language = wm.server->arg("language").toInt();
+        }
 
         #if defined(ESP32_2432S028R) || defined(ESP32_2432S028_2USB)
         Settings.invertColors = (strncmp(invertColors.getValue(), "T", 1) == 0);
@@ -339,6 +371,9 @@ void init_WifiManager()
     Settings.Timezone = atoi(time_text_box_num.getValue());
     Serial.print(LANG_TEXT_TIMEZONE_FROMUTC);
     Serial.println(Settings.Timezone);
+    if (wm.server->hasArg("language")) {
+        Settings.Language = wm.server->arg("language").toInt();
+    }
 
     #ifdef ESP32_2432S028R
     Settings.invertColors = (strncmp(invertColors.getValue(), "T", 1) == 0);
@@ -350,8 +385,9 @@ void init_WifiManager()
     if (shouldSaveConfig)
     {
         nvMem.saveConfig(&Settings);
+        setCurrentLang(Settings.Language);
         #if defined(ESP32_2432S028R) || defined(ESP32_2432S028_2USB)
-         if (Settings.invertColors) ESP.restart();                
+         if (Settings.invertColors) ESP.restart();
         #endif
         #if defined(ESP32_2432S028R) || defined(ESP32_2432S028_2USB)
         if (Settings.Brightness != 250) ESP.restart();

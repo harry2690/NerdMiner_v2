@@ -133,6 +133,11 @@ bool SDCard::loadConfigFile(TSettings* Settings)
                     } else {
                         Settings->Brightness = 250;
                     }
+                    if (json.containsKey(JSON_KEY_LANGUAGE)) {
+                        Settings->Language = json[JSON_KEY_LANGUAGE].as<uint8_t>();
+                    } else {
+                        Settings->Language = DEFAULT_LANGUAGE;
+                    }
                     // Serial.printf("Carteira Lida SD:%s\n", Settings.BtcWallet);       
                     Serial.printf("Carteira Lida SDs:%s\n", Settings->BtcWallet);                       
                     return true;
