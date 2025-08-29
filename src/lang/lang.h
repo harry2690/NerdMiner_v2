@@ -1,4 +1,5 @@
 #pragma once
+#include <Arduino.h>
 
 enum LangText {
     LANG_TEXT_STATS,
