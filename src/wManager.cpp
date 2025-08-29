@@ -17,6 +17,7 @@
 #include "timeconst.h"
 #include "lang/lang.h"
 
+extern void handleStatus();
 
 // Flag for saving data
 bool shouldSaveConfig = false;
@@ -297,6 +298,8 @@ void init_WifiManager()
         Serial.println(LANG_TEXT_WIFI_CONNECTED);
         Serial.print(LANG_TEXT_IP_ADDRESS_COLON);
         Serial.println(WiFi.localIP());
+        wm.server->on("/status", handleStatus);
+        wm.startWebPortal();
 
 
         // Lets deal with the user config values
