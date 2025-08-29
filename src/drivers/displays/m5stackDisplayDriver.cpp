@@ -10,7 +10,7 @@
 #include "monitor.h"
 #include "drivers/storage/storage.h"
 #include "wManager.h"
-#include "lang/lang_en.h"
+#include "lang/lang.h"
 
 extern monitor_data mMonitor;
 extern TSettings Settings;
@@ -22,6 +22,8 @@ void m5stackDisplay_Init(void)
   M5.Power.begin(); //Init power
   M5.Lcd.setTextColor(WHITE);
   M5.Lcd.setFreeFont(FMB9);
+  M5.Lcd.setAttribute(UTF8_SWITCH, true);
+  M5.Lcd.loadFont("/fonts/unicode.vlw");
   M5.Lcd.setCursor(0,0);
   M5.Lcd.fillScreen(BLACK);
   M5.Lcd.println("");

@@ -10,7 +10,7 @@
 #include "version.h"
 #include "monitor.h"
 #include "rotation.h"
-#include "lang/lang_en.h"
+#include "lang/lang.h"
 
 #define WIDTH 80
 #define HEIGHT 160
@@ -27,6 +27,8 @@ void m5stickCDriver_Init(void)
   M5.Lcd.setTextSize(1);
   M5.Lcd.fillScreen(BLACK);
   M5.Axp.ScreenBreath(10);  //screen brightness 7-15
+  M5.Lcd.setAttribute(UTF8_SWITCH, true);
+  M5.Lcd.loadFont("/fonts/unicode.vlw");
 }
 
 void m5stickCDriver_AlternateScreenState(void)
