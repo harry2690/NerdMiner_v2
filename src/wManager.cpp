@@ -15,6 +15,7 @@
 #include "drivers/storage/storage.h"
 #include "mining.h"
 #include "timeconst.h"
+#include "lang/lang_en.h"
 
 
 // Flag for saving data
@@ -34,15 +35,15 @@ extern SDCard SDCrd;
 void saveConfigCallback()
 // Callback notifying us of the need to save configuration
 {
-    Serial.println("Should save config");
-    shouldSaveConfig = true;    
+    Serial.println(LANG_TEXT_SHOULD_SAVE_CONFIG);
+    shouldSaveConfig = true;
     //wm.setConfigPortalBlocking(false);
 }
 
 /* void saveParamsCallback()
 // Callback notifying us of the need to save configuration
 {
-    Serial.println("Should save config");
+    Serial.println(LANG_TEXT_SHOULD_SAVE_CONFIG);
     shouldSaveConfig = true;
     nvMem.saveConfig(&Settings);
 } */
@@ -50,18 +51,17 @@ void saveConfigCallback()
 void configModeCallback(WiFiManager* myWiFiManager)
 // Called when config mode launched
 {
-    Serial.println("Entered Configuration Mode");
+    Serial.println(LANG_TEXT_ENTERED_CONFIG_MODE);
     drawSetupScreen();
-    Serial.print("Config SSID: ");
+    Serial.print(LANG_TEXT_CONFIG_SSID);
     Serial.println(myWiFiManager->getConfigPortalSSID());
-
-    Serial.print("Config IP Address: ");
+    Serial.print(LANG_TEXT_CONFIG_IP_ADDRESS);
     Serial.println(WiFi.softAPIP());
 }
 
 void reset_configuration()
 {
-    Serial.println("Erasing Config, restarting");
+    Serial.println(LANG_TEXT_ERASING_CONFIG_RESTARTING);
     nvMem.deleteConfig();
     resetStat();
     wm.resetSettings();
@@ -89,7 +89,7 @@ void init_WifiManager()
 #if defined(PIN_BUTTON_2)
     // Check if button2 is pressed to enter configMode with actual configuration
     if (!digitalRead(PIN_BUTTON_2)) {
-        Serial.println(F("Button pressed to force start config mode"));
+        Serial.println(LANG_TEXT_BUTTON_FORCE_CONFIG_MODE);
         forceConfig = true;
         wm.setBreakAfterConfig(true); //Set to detect config edition and save
     }
@@ -196,8 +196,8 @@ void init_WifiManager()
     wm.addParameter(&brightness_text_box_num);
   #endif
 
-    Serial.println("AllDone: ");
-    if (forceConfig)    
+    Serial.println(LANG_TEXT_ALLDONE);
+    if (forceConfig)
     {
         // Run if we need a configuration
         //No configuramos timeout al modulo
@@ -207,7 +207,7 @@ void init_WifiManager()
         if (!wm.startConfigPortal(DEFAULT_SSID, DEFAULT_WIFIPW))
         {
             //Could be break forced after edditing, so save new config
-            Serial.println("failed to connect and hit timeout");
+            Serial.println(LANG_TEXT_FAILED_CONNECT_TIMEOUT);
             Settings.PoolAddress = pool_text_box.getValue();
             Settings.PoolPort = atoi(port_text_box_num.getValue());
             strncpy(Settings.PoolPassword, password_text_box.getValue(), sizeof(Settings.PoolPassword));
@@ -238,7 +238,7 @@ void init_WifiManager()
         // if (!wm.autoConnect(Settings.WifiSSID.c_str(), Settings.WifiPW.c_str()))
         if (!wm.autoConnect(DEFAULT_SSID, DEFAULT_WIFIPW))
         {
-            Serial.println("Failed to connect to configured WIFI, and hit timeout");
+            Serial.println(LANG_TEXT_FAILED_CONNECT_WIFI_TIMEOUT);
             if (shouldSaveConfig) {
                 // Save new config            
                 Settings.PoolAddress = pool_text_box.getValue();
@@ -265,8 +265,8 @@ void init_WifiManager()
     if (WiFi.status() == WL_CONNECTED) {
         //tft.pushImage(0, 0, MinerWidth, MinerHeight, MinerScreen);
         Serial.println("");
-        Serial.println("WiFi connected");
-        Serial.print("IP address: ");
+        Serial.println(LANG_TEXT_WIFI_CONNECTED);
+        Serial.print(LANG_TEXT_IP_ADDRESS_COLON);
         Serial.println(WiFi.localIP());
 
 
@@ -275,38 +275,38 @@ void init_WifiManager()
         // Copy the string value
         Settings.PoolAddress = pool_text_box.getValue();
         //strncpy(Settings.PoolAddress, pool_text_box.getValue(), sizeof(Settings.PoolAddress));
-        Serial.print("PoolString: ");
+        Serial.print(LANG_TEXT_POOLSTRING);
         Serial.println(Settings.PoolAddress);
 
         //Convert the number value
         Settings.PoolPort = atoi(port_text_box_num.getValue());
-        Serial.print("portNumber: ");
+        Serial.print(LANG_TEXT_PORTNUMBER);
         Serial.println(Settings.PoolPort);
 
         // Copy the string value
         strncpy(Settings.PoolPassword, password_text_box.getValue(), sizeof(Settings.PoolPassword));
-        Serial.print("poolPassword: ");
+        Serial.print(LANG_TEXT_POOLPASSWORD);
         Serial.println(Settings.PoolPassword);
 
         // Copy the string value
         strncpy(Settings.BtcWallet, addr_text_box.getValue(), sizeof(Settings.BtcWallet));
-        Serial.print("btcString: ");
+        Serial.print(LANG_TEXT_BTCSTRING);
         Serial.println(Settings.BtcWallet);
 
         //Convert the number value
         Settings.Timezone = atoi(time_text_box_num.getValue());
-        Serial.print("TimeZone fromUTC: ");
+        Serial.print(LANG_TEXT_TIMEZONE_FROMUTC);
         Serial.println(Settings.Timezone);
 
         #if defined(ESP32_2432S028R) || defined(ESP32_2432S028_2USB)
         Settings.invertColors = (strncmp(invertColors.getValue(), "T", 1) == 0);
-        Serial.print("Invert Colors: ");
-        Serial.println(Settings.invertColors);        
+        Serial.print(LANG_TEXT_INVERT_COLORS);
+        Serial.println(Settings.invertColors);
         #endif
 
         #if defined(ESP32_2432S028R) || defined(ESP32_2432S028_2USB)
         Settings.Brightness = atoi(brightness_text_box_num.getValue());
-        Serial.print("Brightness: ");
+        Serial.print(LANG_TEXT_BRIGHTNESS);
         Serial.println(Settings.Brightness);
         #endif
 
@@ -317,32 +317,32 @@ void init_WifiManager()
     // Copy the string value
     Settings.PoolAddress = pool_text_box.getValue();
     //strncpy(Settings.PoolAddress, pool_text_box.getValue(), sizeof(Settings.PoolAddress));
-    Serial.print("PoolString: ");
+    Serial.print(LANG_TEXT_POOLSTRING);
     Serial.println(Settings.PoolAddress);
 
     //Convert the number value
     Settings.PoolPort = atoi(port_text_box_num.getValue());
-    Serial.print("portNumber: ");
+    Serial.print(LANG_TEXT_PORTNUMBER);
     Serial.println(Settings.PoolPort);
 
     // Copy the string value
     strncpy(Settings.PoolPassword, password_text_box.getValue(), sizeof(Settings.PoolPassword));
-    Serial.print("poolPassword: ");
+    Serial.print(LANG_TEXT_POOLPASSWORD);
     Serial.println(Settings.PoolPassword);
 
     // Copy the string value
     strncpy(Settings.BtcWallet, addr_text_box.getValue(), sizeof(Settings.BtcWallet));
-    Serial.print("btcString: ");
+    Serial.print(LANG_TEXT_BTCSTRING);
     Serial.println(Settings.BtcWallet);
 
     //Convert the number value
     Settings.Timezone = atoi(time_text_box_num.getValue());
-    Serial.print("TimeZone fromUTC: ");
+    Serial.print(LANG_TEXT_TIMEZONE_FROMUTC);
     Serial.println(Settings.Timezone);
 
     #ifdef ESP32_2432S028R
     Settings.invertColors = (strncmp(invertColors.getValue(), "T", 1) == 0);
-    Serial.print("Invert Colors: ");
+    Serial.print(LANG_TEXT_INVERT_COLORS);
     Serial.println(Settings.invertColors);
     #endif
 
@@ -369,9 +369,9 @@ void wifiManagerProcess() {
     int newStatus = WiFi.status();
     if (newStatus != oldStatus) {
         if (newStatus == WL_CONNECTED) {
-            Serial.println("CONNECTED - Current ip: " + WiFi.localIP().toString());
+            Serial.println(String(LANG_TEXT_CONNECTED_CURRENT_IP) + WiFi.localIP().toString());
         } else {
-            Serial.print("[Error] - current status: ");
+            Serial.print(LANG_TEXT_ERROR_CURRENT_STATUS);
             Serial.println(newStatus);
         }
         oldStatus = newStatus;
