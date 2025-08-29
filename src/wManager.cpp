@@ -145,10 +145,10 @@ void init_WifiManager()
     char langSel1[10] = "";
     char langSel2[10] = "";
     switch (Settings.Language) {
-        case 1:
+        case LANG_ZH_TW:
             strcpy(langSel1, "selected");
             break;
-        case 2:
+        case LANG_JA:
             strcpy(langSel2, "selected");
             break;
         default:
@@ -157,8 +157,8 @@ void init_WifiManager()
     }
     char languageDropdown[200];
     snprintf(languageDropdown, sizeof(languageDropdown),
-             "<br/><label for='language'>Language</label><select name='language' id='language'><option value='0' %s>English</option><option value='1' %s>繁中</option><option value='2' %s>日本語</option></select>",
-             langSel0, langSel1, langSel2);
+             "<br/><label for='language'>Language</label><select name='language' id='language'><option value='%d' %s>English</option><option value='%d' %s>繁中</option><option value='%d' %s>日本語</option></select>",
+             LANG_EN, langSel0, LANG_ZH_TW, langSel1, LANG_JA, langSel2);
     WiFiManagerParameter language_dropdown(languageDropdown);
 
     // Text box (String) - 80 characters maximum

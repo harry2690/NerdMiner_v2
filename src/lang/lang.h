@@ -43,6 +43,12 @@ struct LanguagePack {
     const char* text[LANG_TEXT_MAX];
 };
 
+enum Language {
+    LANG_EN = 0,
+    LANG_ZH_TW,
+    LANG_JA,
+};
+
 extern const LanguagePack LanguagePack_en;
 extern const LanguagePack LanguagePack_zh_tw;
 extern const LanguagePack LanguagePack_ja;
