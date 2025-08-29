@@ -37,6 +37,9 @@ const LanguagePack LanguagePack_zh_tw = {
         "反相顏色: ",
         "亮度: ",
         "已連線 - 目前 IP: ",
-        "[錯誤] - 目前狀態: "
+        "[錯誤] - 目前狀態: ",
+        "初始化錯誤",
+        "切換顯示狀態",
+        ">>> 已完成 %s 份額，%s Khashes，平均算力 %s KH/s\n"
     }
 };

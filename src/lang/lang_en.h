@@ -37,7 +37,10 @@
         "Invert Colors: ",
         "Brightness: ",
         "CONNECTED - Current ip: ",
-        "[Error] - current status: "
+        "[Error] - current status: ",
+        "Initialise error",
+        "Switching display state",
+        ">>> Completed %s share(s), %s Khashes, avg. hashrate %s KH/s\n"
     }
 };
 
