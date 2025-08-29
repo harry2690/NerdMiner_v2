@@ -3,7 +3,6 @@
 
 #include <Arduino.h>
 #include <WiFi.h>
-#include <WebServer.h>
 #include <esp_task_wdt.h>
 #include <OneButton.h>
 
@@ -49,7 +48,6 @@ extern TSettings Settings;
 
 /**********************⚡ GLOBAL Vars *******************************/
 
-WebServer server(80);
 void handleStatus();
 
 unsigned long start = millis();
@@ -123,9 +121,6 @@ void setup()
   init_WifiManager();
   setCurrentLang(Settings.Language);
 
-  server.on("/", handleStatus);
-  server.begin();
-
   /******** CREATE TASK TO PRINT SCREEN *****/
   //tft.pushImage(0, 0, MinerWidth, MinerHeight, MinerScreen);
   // Higher prio monitor task
@@ -181,7 +176,7 @@ void handleStatus() {
   json += "\"completedShares\":\"" + data.completedShares + "\",";
   json += "\"bestDiff\":\"" + data.bestDiff + "\"";
   json += "}";
-  server.send(200, "application/json", json);
+  wm.server->send(200, "application/json", json);
 }
 
 void loop() {
@@ -198,7 +193,6 @@ void loop() {
   touchHandler.isTouched();
 #endif
   wifiManagerProcess(); // avoid delays() in loop when non-blocking and other long running code
-  server.handleClient();
 
   vTaskDelay(50 / portTICK_PERIOD_MS);
 }
