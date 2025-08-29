@@ -15,7 +15,7 @@
 #include "drivers/storage/storage.h"
 #include "mining.h"
 #include "timeconst.h"
-#include "lang/lang_en.h"
+#include "lang/lang.h"
 
 
 // Flag for saving data
