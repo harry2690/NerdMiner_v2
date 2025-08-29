@@ -2,6 +2,7 @@
 #define _STORAGE_H_
 
 #include <Arduino.h>
+#include "../../lang/lang.h"
 
 // config files
 
@@ -20,7 +21,7 @@
 #define DEFAULT_SAVESTATS       false
 #define DEFAULT_INVERTCOLORS    false
 #define DEFAULT_BRIGHTNESS      250
-#define DEFAULT_LANGUAGE        0
+#define DEFAULT_LANGUAGE        LANG_ZH_TW
 
 // JSON config files
 #define JSON_CONFIG_FILE        "/config.json"

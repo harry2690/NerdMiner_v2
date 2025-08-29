@@ -7,10 +7,10 @@ const LanguagePack* CurrentLang = &LanguagePack_en;
 
 void setCurrentLang(uint8_t lang) {
     switch (lang) {
-        case 1:
+        case LANG_ZH_TW:
             CurrentLang = &LanguagePack_zh_tw;
             break;
-        case 2:
+        case LANG_JA:
             CurrentLang = &LanguagePack_ja;
             break;
         default:
