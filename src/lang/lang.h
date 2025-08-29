@@ -47,6 +47,7 @@ extern const LanguagePack LanguagePack_en;
 extern const LanguagePack LanguagePack_zh_tw;
 extern const LanguagePack LanguagePack_ja;
 extern const LanguagePack* CurrentLang;
+void setCurrentLang(uint8_t lang);
 
 #define LANG_TEXT_STATS (CurrentLang->text[LANG_TEXT_STATS])
 #define LANG_TEXT_BTC (CurrentLang->text[LANG_TEXT_BTC])

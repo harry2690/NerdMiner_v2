@@ -13,7 +13,9 @@
 #include "monitor.h"
 #include "drivers/displays/display.h"
 #include "drivers/storage/SDCard.h"
+#include "drivers/storage/storage.h"
 #include "timeconst.h"
+#include "lang/lang.h"
 
 #ifdef TOUCH_ENABLE
 #include "TouchHandler.h"
@@ -37,6 +39,7 @@ extern TouchHandler touchHandler;
 #endif
 
 extern monitor_data mMonitor;
+extern TSettings Settings;
 
 #ifdef SD_ID
   SDCard SDCrd = SDCard(SD_ID);
@@ -118,6 +121,7 @@ void setup()
 
   /******** INIT WIFI ************/
   init_WifiManager();
+  setCurrentLang(Settings.Language);
 
   server.on("/", handleStatus);
   server.begin();
