@@ -10,6 +10,7 @@
 #include "monitor.h"
 #include "drivers/storage/storage.h"
 #include "wManager.h"
+#include "lang/lang_en.h"
 
 extern monitor_data mMonitor;
 extern TSettings Settings;
@@ -68,17 +69,17 @@ void m5stackDisplay_NoScreen(unsigned long mElapsed)
   M5.Lcd.progressBar(0,30,320,20, data.currentHashRate.toInt());
   M5.Lcd.println("");
   M5.Lcd.println("");
-  M5.Lcd.print("Avg. hashrate : "); M5.Lcd.setTextColor(GREEN); M5.Lcd.print(data.currentHashRate); M5.Lcd.setTextColor(WHITE); M5.Lcd.println(" KH/s");
-  M5.Lcd.print("Running time  : "); M5.Lcd.setTextColor(GREEN); M5.Lcd.println(data.timeMining); M5.Lcd.setTextColor(WHITE);
-  M5.Lcd.print("Total hashes  : "); M5.Lcd.setTextColor(GREEN); M5.Lcd.print(data.totalKHashes); M5.Lcd.setTextColor(WHITE); M5.Lcd.println(" KH");
-  M5.Lcd.print("Block templ.  : "); M5.Lcd.setTextColor(YELLOW); M5.Lcd.println(data.templates); M5.Lcd.setTextColor(WHITE);
-  M5.Lcd.print("Best dificulty: "); M5.Lcd.setTextColor(YELLOW); M5.Lcd.println(data.bestDiff); M5.Lcd.setTextColor(WHITE);
-  M5.Lcd.print("Shares 32bits : "); M5.Lcd.setTextColor(YELLOW); M5.Lcd.println(data.completedShares); M5.Lcd.setTextColor(WHITE);
-  M5.Lcd.print("Valid blocks  : "); M5.Lcd.setTextColor(RED); M5.Lcd.println(data.valids); M5.Lcd.setTextColor(WHITE);
+  M5.Lcd.print(LANG_TEXT_AVG_HASHRATE); M5.Lcd.setTextColor(GREEN); M5.Lcd.print(data.currentHashRate); M5.Lcd.setTextColor(WHITE); M5.Lcd.println(" KH/s");
+  M5.Lcd.print(LANG_TEXT_RUNNING_TIME); M5.Lcd.setTextColor(GREEN); M5.Lcd.println(data.timeMining); M5.Lcd.setTextColor(WHITE);
+  M5.Lcd.print(LANG_TEXT_TOTAL_HASHES); M5.Lcd.setTextColor(GREEN); M5.Lcd.print(data.totalKHashes); M5.Lcd.setTextColor(WHITE); M5.Lcd.println(" KH");
+  M5.Lcd.print(LANG_TEXT_BLOCK_TEMPL); M5.Lcd.setTextColor(YELLOW); M5.Lcd.println(data.templates); M5.Lcd.setTextColor(WHITE);
+  M5.Lcd.print(LANG_TEXT_BEST_DIFF); M5.Lcd.setTextColor(YELLOW); M5.Lcd.println(data.bestDiff); M5.Lcd.setTextColor(WHITE);
+  M5.Lcd.print(LANG_TEXT_SHARES_32BITS); M5.Lcd.setTextColor(YELLOW); M5.Lcd.println(data.completedShares); M5.Lcd.setTextColor(WHITE);
+  M5.Lcd.print(LANG_TEXT_VALID_BLOCKS); M5.Lcd.setTextColor(RED); M5.Lcd.println(data.valids); M5.Lcd.setTextColor(WHITE);
   M5.Lcd.println("");
   M5.Lcd.drawLine(0,200,320,200,GREENYELLOW);
-  M5.Lcd.print("Pool: "); M5.Lcd.setTextColor(GREENYELLOW); M5.Lcd.print(Settings.PoolAddress); M5.Lcd.print(":"); M5.Lcd.println(Settings.PoolPort); M5.Lcd.setTextColor(WHITE);
-  M5.Lcd.print("IP  : "); M5.Lcd.setTextColor(GREENYELLOW); M5.Lcd.println(WiFi.localIP()); M5.Lcd.setTextColor(WHITE);
+  M5.Lcd.print(LANG_TEXT_POOL); M5.Lcd.setTextColor(GREENYELLOW); M5.Lcd.print(Settings.PoolAddress); M5.Lcd.print(":"); M5.Lcd.println(Settings.PoolPort); M5.Lcd.setTextColor(WHITE);
+  M5.Lcd.print(LANG_TEXT_IP); M5.Lcd.setTextColor(GREENYELLOW); M5.Lcd.println(WiFi.localIP()); M5.Lcd.setTextColor(WHITE);
   M5.Lcd.println("");
 }
 void m5stackDisplay_LoadingScreen(void)

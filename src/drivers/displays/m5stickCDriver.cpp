@@ -10,6 +10,7 @@
 #include "version.h"
 #include "monitor.h"
 #include "rotation.h"
+#include "lang/lang_en.h"
 
 #define WIDTH 80
 #define HEIGHT 160
@@ -126,35 +127,35 @@ void m5stickCDriver_GlobalHashScreen(unsigned long mElapsed)
   M5.Lcd.setTextFont(2);
   M5.Lcd.setCursor(118, 1);
   M5.Lcd.setTextColor(GREEN,BLACK);
-  M5.Lcd.print("STATS");
+  M5.Lcd.print(LANG_TEXT_STATS);
 
   M5.Lcd.setCursor(5, 1);
   M5.Lcd.setTextColor(ORANGE,BLACK);
-  M5.Lcd.print("BTC    ");
+  M5.Lcd.print(LANG_TEXT_BTC);
   M5.Lcd.setTextColor(GRAY,BLACK);
   M5.Lcd.print(data.btcPrice.c_str());
 
   M5.Lcd.setCursor(5, 17);
   M5.Lcd.setTextColor(LIGHTBLUE,BLACK);
-  M5.Lcd.print("Fee    ");
+  M5.Lcd.print(LANG_TEXT_FEE);
   M5.Lcd.setTextColor(GRAY,BLACK);
   M5.Lcd.print(data.halfHourFee.c_str());
 
   M5.Lcd.setCursor(5, 33);
   M5.Lcd.setTextColor(ORANGE,BLACK);
-  M5.Lcd.print("Diff    ");
+  M5.Lcd.print(LANG_TEXT_DIFF);
   M5.Lcd.setTextColor(GRAY,BLACK);
   M5.Lcd.print(data.netwrokDifficulty.c_str());
 
   M5.Lcd.setCursor(5, 49);
   M5.Lcd.setTextColor(LIGHTBLUE,BLACK);
-  M5.Lcd.print("GHash  ");
+  M5.Lcd.print(LANG_TEXT_GHASH);
   M5.Lcd.setTextColor(GRAY,BLACK);
   M5.Lcd.print(data.globalHashRate.c_str());
 
   M5.Lcd.setCursor(5, 65);
   M5.Lcd.setTextColor(ORANGE,BLACK);
-  M5.Lcd.print("Height  ");
+  M5.Lcd.print(LANG_TEXT_HEIGHT);
   M5.Lcd.setTextColor(GRAY,BLACK);
   M5.Lcd.print(data.blockHeight.c_str());
 
