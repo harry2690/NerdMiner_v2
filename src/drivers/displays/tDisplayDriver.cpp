@@ -10,6 +10,7 @@
 #include "monitor.h"
 #include "OpenFontRender.h"
 #include "rotation.h"
+#include "lang/lang.h"
 
 #define WIDTH 340
 #define HEIGHT 170
@@ -39,10 +40,9 @@ void tDisplay_Init(void)
   render.setLineSpaceRatio(0.9); // Espaciado entre texto
 
   // Load the font and check it can be read OK
-  // if (render.loadFont(NotoSans_Bold, sizeof(NotoSans_Bold))) {
-  if (render.loadFont(DigitalNumbers, sizeof(DigitalNumbers)))
+  if (render.loadFont(NotoSans_Bold, sizeof(NotoSans_Bold)))
   {
-    Serial.println("Initialise error");
+    Serial.println(LANG_TEXT_INITIALISE_ERROR);
     return;
   }
 }
@@ -50,7 +50,7 @@ void tDisplay_Init(void)
 void tDisplay_AlternateScreenState(void)
 {
   int screen_state = digitalRead(TFT_BL);
-  Serial.println("Switching display state");
+  Serial.println(LANG_TEXT_SWITCHING_DISPLAY_STATE);
   digitalWrite(TFT_BL, !screen_state);
 }
 
@@ -66,7 +66,7 @@ void tDisplay_MinerScreen(unsigned long mElapsed)
   // Print background screen
   background.pushImage(0, 0, MinerWidth, MinerHeight, MinerScreen);
 
-  Serial.printf(">>> Completed %s share(s), %s Khashes, avg. hashrate %s KH/s\n",
+  Serial.printf(LANG_TEXT_MINING_STATUS,
                 data.completedShares.c_str(), data.totalKHashes.c_str(), data.currentHashRate.c_str());
 
   // Hashrate
@@ -116,7 +116,7 @@ void tDisplay_ClockScreen(unsigned long mElapsed)
   // Print background screen
   background.pushImage(0, 0, minerClockWidth, minerClockHeight, minerClockScreen);
 
-  Serial.printf(">>> Completed %s share(s), %s Khashes, avg. hashrate %s KH/s\n",
+  Serial.printf(LANG_TEXT_MINING_STATUS,
                 data.completedShares.c_str(), data.totalKHashes.c_str(), data.currentHashRate.c_str());
 
   // Hashrate
@@ -154,7 +154,7 @@ void tDisplay_GlobalHashScreen(unsigned long mElapsed)
   // Print background screen
   background.pushImage(0, 0, globalHashWidth, globalHashHeight, globalHashScreen);
 
-  Serial.printf(">>> Completed %s share(s), %s Khashes, avg. hashrate %s KH/s\n",
+  Serial.printf(LANG_TEXT_MINING_STATUS,
                 data.completedShares.c_str(), data.totalKHashes.c_str(), data.currentHashRate.c_str());
 
   // Print BTC Price
@@ -217,7 +217,7 @@ void tDisplay_BTCprice(unsigned long mElapsed)
   // Print background screen
   background.pushImage(0, 0, priceScreenWidth, priceScreenHeight, priceScreen);
 
-  Serial.printf(">>> Completed %s share(s), %s Khashes, avg. hashrate %s KH/s\n",
+  Serial.printf(LANG_TEXT_MINING_STATUS,
                 data.completedShares.c_str(), data.totalKHashes.c_str(), data.currentHashRate.c_str());
 
   // Hashrate

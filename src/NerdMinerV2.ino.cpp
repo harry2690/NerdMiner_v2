@@ -104,7 +104,8 @@ void setup()
 
   /******** INIT DISPLAY ************/
   initDisplay();
-  
+  setCurrentLang(Settings.Language);
+
   /******** PRINT INIT SCREEN *****/
   drawLoadingScreen();
   delay(2*SECOND_MS);
@@ -119,7 +120,6 @@ void setup()
 
   /******** INIT WIFI ************/
   init_WifiManager();
-  setCurrentLang(Settings.Language);
 
   /******** CREATE TASK TO PRINT SCREEN *****/
   //tft.pushImage(0, 0, MinerWidth, MinerHeight, MinerScreen);
